@@ -1,7 +1,7 @@
 PROBLEM_DESC=\
  '''
 '''
-# COLORS: B: black, W: white, R: red, Y: yellow, O: orage, P: pink 
+# COLORS: B: black, W: white, R: red, Y: yellow, O: orange, P: pink 
 COLORS={0: 'B', 1: 'W', 2: 'R', 3: 'Y', 4: 'O', 5: 'P'}
 
 ACTIONS = ["Up", "Down", "Left", "Right"]
@@ -78,7 +78,8 @@ def getUserColors():
 
 
 #<OPERATORS>
-OPERATORS = [Operator( )]
+OPERATORS = [Operator( )] # There should be 12 moves RLUDFB(6) ** i(12)
+# Link: https://www.rubiks.com/blog/how-to-solve-the-rubiks-cube-stage-1
 #</OPERATORS>
 
 def up(state):
@@ -91,6 +92,10 @@ def left(state):
 
 
 def right(state):
+
+def front(state):
+
+def back(state):
 
 
 
