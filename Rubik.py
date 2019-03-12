@@ -78,24 +78,41 @@ def getUserColors():
 
 
 #<OPERATORS>
-OPERATORS = [Operator( )] # There should be 12 moves RLUDFB(6) ** i(12)
+OPERATORS = [Operator( )] 
+
+# 26 cubies -- 8 corners, 12 edges, (not relevant: 6 centers)
+# We need an array of 20 elements, encode position and orientation (3 for corner, 2 for edge)
+  # (8! * 3**8 * 12! * 2**12) / 12 (up to isomorphism)
+
+# 3 different moves for 6 different operators = BRANCHING FACTOR = 18
+  # Twisting same face twice = redundant => 15
+  # Twisting opposite faces  = redundant => asymptotic b-factor = 13.34
+  
+
+
+# There should be 18 moves RLUDFB(6) + i(12) + 180deg(18)
 # Link: https://www.rubiks.com/blog/how-to-solve-the-rubiks-cube-stage-1
 #</OPERATORS>
 
-def up(state):
+# If i == false, then perform the inverse
+
+def up(state, i = true):
 
 
-def down(state):
+def down(state, i = true):
   up(state)
 
-def left(state):
+def left(state, i = true):
 
 
-def right(state):
+def right(state, i = true):
 
-def front(state):
 
-def back(state):
+def front(state, i = true):
+
+
+def back(state, i = true):
+
 
 
 
