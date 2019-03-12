@@ -1,0 +1,52 @@
+CSE 415 Project Report
+
+Title: The Rubik's Cube: A Feature-Based Approach to Reinforcement Learning
+
+Collaborators: Daniel Nguyen, Lilian Lei
+
+Function of Program: Given a scrambled starting state of the Rubik's cube, the program utilizes a feature-based Q-Learning approach to continually refine the policy of the Markov Decision Process in the Rubik's cube state space in order to solve the cube.
+
+Techniques Used: 
+
+1) Features:
+
+The two main features we utilized was the 2x2x2 cube problem, in which every "cubie", which is an exposed subcube of the Rubik's cube is a corner cube, and a rule that the cube can only take 180 degree operations. In this puzzle, colored squares can only possibly be on two faces (its initial face, and the opposite face).
+
+We then have 6 different operations, which all involve 180 degree turns: right, left, up, bottom, front, and back. This is much less than the branching factor of 18 in the original 3x3x3 cube. Also, considering the redundant moves that was seen in the original problem, such as subsequently moving the opposite face, or the face that was just moved, our branching factor reduces down to 4.
+
+2) Technique:
+
+Formulation of the Cube:
+
+First and foremost, we need a representation of the 2x2x2 cube in python. For each tile on each face, we give it a label p_i, where i is in the set {1,2,3,4}, and we start our count at the upper-left corner of any given face and numerate the sides in a clockwise fashion. Each face will be an array of size 4, and the cube will be a 2D array containing 6 of these arrays.
+
+Goal Testing: We iterate through the cube, and check each face. If each face have the same colors for all 4 tiles, then we consider that face solved. And if are 6 faces are solved, then the cube is solved.
+
+(We originally planned to have our puzzle consists of only 8 corner "cubies", but did not know how to implement that in python.)
+
+Learning Theory for Solving:
+
+Our plan was to a Linear Function Approximation method described in Poole and Mackworth's "AI" (2nd ed.). For the feature aspect in our linear equation, we use a heuristic function F_i, where i ranges from 1 to 6, and there are three values we give it -- If the pattern is checkered, where all corresponding colors are on opposite corners, we give that F a value of 0. If there are two of each colors but the configuration is not checkered, then we give it a value of one, since can be solved. And if the face is uniform, then we give that F a value of 2.
+
+Based on the F we got for a face, we then update the corresponding weight 'w' in an appropriate manner; if the F was 0, we decrease the weight, if the weight was 1 then we let it stay the same, and if the weight was 2 then we increase the weight.
+
+References:
+Richard Korf's paper on the Rubik's Cube;
+    URL: https://courses.cs.washington.edu/courses/cse415/19wi/uwnetid/proj/korfrubik.pdf
+Poole and Mackworth's "AI" (2nd ed), Reinforcement Learning with Features,
+    URL: https://artint.info/html/ArtInt_271.html
+
+What we would have added to the project if we had more time:
+The actual function, algorithm and a working interactive cube to work with.
+
+Partners' Reflections:
+
+Danny: I found that we were both busy and had conflicting schedules, so it was meet up to get up to speed. We communicated mainly through text and pushed code on GitHub to improve workflow. We discussed the definitions and conventions of our rubik's cube thoroughly to avoid confusion -- which orientations the faces could take to minimize the 'messiness' of taking turns. Ultimately, I think that were were both too busy with work from other classes this quarter that we were unable to complete this project to completion.
+
+Lillian Lei: I am in charge of understanding Q learning with feature-based representation and figuring out an admissible heuristic function and state representation. 
+
+From my perspective, the benefit this group work is that not only we approached everything more efficiently but also we got to learn from each other’s computer science knowledge. The challenging part for him is that we were really busy for the past few weeks, so we did not have enough time to meet and discuss the problems. I believe that had we started earlier we would have more time on implementing Q-learning.
+
+
+
+
