@@ -4,7 +4,183 @@ PROBLEM_DESC=\
 # COLORS: B: black, W: white, R: red, Y: yellow, O: orange, P: pink 
 COLORS={0: 'B', 1: 'W', 2: 'R', 3: 'Y', 4: 'O', 5: 'P'}
 
-ACTIONS = ["Up", "Down", "Left", "Right"]
+ACTIONS = ["Up", "Down", "Left", "Right", "Front", "Back"]
+Opposite = ["Up", "Down"], ["Left", "Right"], ["Front", "Back"]
+
+cube = []
+for i in range(6):
+  cube.append([i,i,i,i])
+
+# R, L, Back, Up, Front, Back
+
+# L -- FL <-> BL, UL <-> BotL, L - switch corners
+# R -- FR <-> BR
+
+# move % 2 == 0, opp = move + 1
+# move % 2 == 1, opp = move - 1
+
+# [0,1,2,3,4,5].remove(2).remove(3) => [0,1,4,5] -- 0 - 1, 4 - 5
+
+# L - p1,p4
+# R - p2,p3
+# U - p1,p2
+# B - p4,p3
+# F - 
+
+front = cube[0]
+back = cube[1]
+left = cube[2]
+right = cube[3]
+up = cube[4]
+bottom = cube[5]
+
+frontlu = front[0]
+frontru = front[1]
+frontrb = front[2]
+frontlb = front[3]
+backlu = back[0]
+backru = back[1]
+backrb = back[2]
+backlb = back[3]
+leftlu = left[0]
+leftru = left[1]
+leftrb = left[2]
+leftlb = left[3]
+rightlu = right[0]
+rightru = right[1]
+rightrb = right[2]
+rightlb = right[3]
+uplu = up[0]
+upru = up[1]
+uprb = up[2]
+uplb = up[3]
+bottomlu = bottom[0]
+bottomru = bottom[1]
+bottomrb = bottom[2]
+bottomlb = bottom[3]
+
+def front: #2
+
+  tempUlu = cube[4][0]
+  tempUlbo = cube[4][3]
+  cube[4][0] = cube[5][0]
+  cube[4][3] = cube[5][3]
+  cube[5][0] = tempUlu
+  cube[5][1] = tempUlbo
+
+  tempUlu = cube[0][0]
+  tempUlbo = cube[0][3]
+  cube[0][0] = cube[1][0]
+  cube[0][3] = cube[1][3]
+  cube[1][0] = tempUlu
+  cube[1][1] = tempUlbo
+
+  tempLlu = cube[0][0]
+  tempLru = cube[0][1]
+  cube[0][0] =cube[0][2]
+  cube[0][1] =cube[0][2]
+  cube[0][2] = tempLlu
+  cube[0][3] = tempLru
+
+def back: #2
+
+  tempUlu = cube[4][0]
+  tempUlbo = cube[4][3]
+  cube[4][0] = cube[5][0]
+  cube[4][3] = cube[5][3]
+  cube[5][0] = tempUlu
+  cube[5][1] = tempUlbo
+
+  tempUlu = cube[0][0]
+  tempUlbo = cube[0][3]
+  cube[0][0] = cube[1][0]
+  cube[0][3] = cube[1][3]
+  cube[1][0] = tempUlu
+  cube[1][1] = tempUlbo
+
+  tempLlu = cube[2][0]
+  tempLru = cube[2][1]
+  cube[2][0] =cube[2][2]
+  cube[2][1] =cube[2][2]
+  cube[2][2] = tempLlu
+  cube[2][3] = tempLru
+
+def left: #2
+
+  
+
+  tempUlu = cube[4][0]
+  tempUlbo = cube[4][3]
+  cube[4][0] = cube[5][0]
+  cube[4][3] = cube[5][3]
+  cube[5][0] = tempUlu
+  cube[5][1] = tempUlbo
+
+  tempUlu = cube[0][0]
+  tempUlbo = cube[0][3]
+  cube[0][0] = cube[1][0]
+  cube[0][3] = cube[1][3]
+  cube[1][0] = tempUlu
+  cube[1][1] = tempUlbo
+
+  tempLlu = cube[2][0]
+  tempLru = cube[2][1]
+  cube[2][0] =cube[2][2]
+  cube[2][1] =cube[2][2]
+  cube[2][2] = tempLlu
+  cube[2][3] = tempLru
+
+def left: #3
+
+  tempUlu = cube[4][0]
+  tempUlbo = cube[4][3]
+  cube[4][0] = cube[5][0]
+  cube[4][3] = cube[5][3]
+  cube[5][0] = tempUlu
+  cube[5][1] = tempUlbo
+
+  tempUlu = cube[0][0]
+  tempUlbo = cube[0][3]
+  cube[0][0] = cube[1][0]
+  cube[0][3] = cube[1][3]
+  cube[1][0] = tempUlu
+  cube[1][1] = tempUlbo
+
+  tempLlu = cube[3][0]
+  tempLru = cube[3][1]
+  cube[3][0] =cube[3][2]
+  cube[3][1] =cube[3][2]
+  cube[3][2] = tempLlu
+  cube[3][3] = tempLru
+
+def up: #5
+
+  # 
+  tempUlu = cube[4][0]
+  tempUlbo = cube[4][3]
+  cube[4][0] = cube[5][0]
+  cube[4][3] = cube[5][3]
+  cube[5][0] = tempUlu
+  cube[5][1] = tempUlbo
+
+  # up-face
+  tempLlu = cube[5][0]
+  tempLru = cube[5][1]
+  cube[5][0] =cube[5][2]
+  cube[5][1] =cube[5][3]
+  cube[5][2] = tempLlu
+  cube[5][3] = tempLru
+
+action = 'some action'
+
+if action % 2 == 0:
+  opp = action + 1
+else:
+  opp = action - 1
+
+arr = [0,1,2,3,4,5].remove(action).remove(opp)
+
+
 
 class State:
   def __init__(self, d):
@@ -87,14 +263,11 @@ OPERATORS = [Operator( )]
 # 3 different moves for 6 different operators = BRANCHING FACTOR = 18
   # Twisting same face twice = redundant => 15
   # Twisting opposite faces  = redundant => asymptotic b-factor = 13.34
-  
 
 
-# There should be 18 moves RLUDFB(6) + i(12) + 180deg(18)
-# Link: https://www.rubiks.com/blog/how-to-solve-the-rubiks-cube-stage-1
-#</OPERATORS>
+# https://ruwix.com/the-rubiks-cube/notation/
 
-# If i == false, then perform the inverse
+
 
 def up(state, i = true):
 
